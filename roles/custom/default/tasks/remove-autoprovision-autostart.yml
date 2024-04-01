@@ -1,0 +1,13 @@
+---
+# Remove the autostart function from ~/.profile if it exists
+- name: Remove the autostart command from ~/.profile if it exists
+  lineinfile: 
+    dest: ~/.profile 
+    state: absent 
+    regexp: ^{{ profile_command }}.*$
+
+- name: Remove the 'Remove Config' Line from config.yml
+  lineinfile:
+    dest: "{{ playbook_dir }}/config.yml"
+    state: absent
+    regexp: "remove_autostart: true"

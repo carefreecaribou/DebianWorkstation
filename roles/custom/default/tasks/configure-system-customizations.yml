@@ -1,0 +1,116 @@
+---
+# Enable Banner Message
+- name: Enable Banner Message
+  replace: 
+    path: /etc/gdm3/greeter.dconf-defaults
+    regexp: '^#( banner-message-enable=true).*$'
+    replace: \1
+  become: true
+
+# Insert Banner Message
+- name: Insert Banner Message
+  replace: 
+    path: /etc/gdm3/greeter.dconf-defaults
+    regexp: ^#( banner-message-text=\').*?\'.*$
+    replace: \1{{ banner_message }}'
+  become: true
+
+# Install VSCodium APT Key
+- name: Install vscodium APT Key
+  get_url:
+    url: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
+    dest: /usr/share/keyrings/vscodium-archive-keyring.asc
+    mode: '0644' 
+  when: codium_state == 'present'
+  become: true
+
+- name: Remove VScodium APT Key
+  file:
+    path: "/usr/share/keyrings/vscodium-archive-keyring.asc"
+    state: absent
+  when: codium_state == 'absent'
+  become: true
+
+
+# Install VSCodium APT Repository
+- name: Install VSCodium APT Repository
+  apt_repository:
+    filename: vscodium
+    repo: "deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.asc ] https://download.vscodium.com/debs vscodium main"
+    state: "{{ codium_state }}"
+  become: true
+
+# Install Customization Packages
+- name: Install Customization packages with apt.
+  apt:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ customization_packages }}"
+  become: true
+
+# Install Flatpack Packages
+- name: Install Customization packages with flatpak.
+  community.general.flatpak:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+    method: "{{ item.method | default('user') }}"
+  loop: "{{ flatpak_packages }}"
+  
+# Install Python Packages.
+- name: Install python packages.
+  pip:
+    name: "{{ item }}"
+  loop: "{{ pip_packages }}"
+
+# Add User to Groups
+- name: Add current user to defined groups.
+  user:
+    name: "{{ ansible_user_id }}"
+    append: true
+    groups: "{{ item }}"
+  become: true
+  loop: "{{ user_groups }}"
+  
+# Disable Middle Click Paste
+- name: Disable middle click paste.
+  community.general.dconf:
+    key: "/org.gnome.desktop.interface"
+    value: "['gtk-enable-primary-paste', '{{ enable_middle_click_paste }}']"
+    state: present
+
+# Start TLP
+- name: Start TLP
+  systemd:
+    name: tlp
+    state: started
+    enabled: true
+  become: true
+
+# Disable Bluetooth From Autostarting on Boot
+# - name: Disable Bluetooth from autostarting on boot
+#   replace: 
+#     path: /etc/tlp.conf
+#     regexp: ^#?(DEVICES_TO_DISABLE_ON_STARTUP=")bluetooth nfc wifi wwan".*$
+#     replace: \1{{ devices_to_disable }}"
+#   become: true
+
+# Add Autostart Desktop Entries
+- name: Add Autostart Desktop Entries.
+  copy: 
+    src: "{{ item.name }}.desktop"
+    dest: "/etc/xdg/autostart/{{ item.name }}.desktop"
+    owner: root
+    group: root
+    mode: '0644'
+    force: no
+  become: true
+  when: item.state == 'present'
+  loop: "{{ autostart_applications }} "
+
+# Remove Unwanted Autostart Applications
+- name: Remove Unwanted Autostart Applications.
+  file:
+    path: "/etc/xdg/autostart/{{ item.name }}.desktop"
+  become: true
+  when: item.state == 'absent'
+  loop: "{{ autostart_applications }} "

@@ -1,0 +1,26 @@
+---
+- name: Wireshark Debconf Configuration
+  # Before installing any package, this only sets the preference for the question
+  debconf:
+    name='wireshark-common'
+    question='wireshark-common/install-setuid'
+    vtype='boolean'
+    value={{wireshark_as_nonsudo | string }}
+  become: true
+  notify: "{{ (wireshark_as_nonsudo) | ternary ('add_wireshark_as_nonsudo', 'remove_wireshark_as_nonsudo')}}"
+
+- name: Flush handlers to handle wireshark configuration.
+  meta: flush_handlers
+
+- name: Update global packages and upgrade
+  apt:
+    update_cache: true
+    upgrade: true
+  become: true
+
+- name: Install Security packages with apt.
+  apt:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ apt_security_tools }}"
+  become: true

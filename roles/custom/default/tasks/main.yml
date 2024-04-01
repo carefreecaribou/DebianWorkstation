@@ -1,0 +1,16 @@
+---
+- import_tasks: remove-autoprovision-autostart.yml
+  when: remove_autostart
+  tags: ['remove_autostart']
+
+- import_tasks: sudoers.yml
+  when: configure_sudoers
+  tags: ['sudoers']
+
+- import_tasks: configure-system-customizations.yml
+  when: configure_system_customizations
+  tags: ['configure_system_customizations']
+
+- import_tasks: security-tools.yml
+  when: configure_infosec_tools
+  tags: ['infosec-tools']

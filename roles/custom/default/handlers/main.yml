@@ -1,0 +1,16 @@
+---
+- name: Add current user to wireshark group.
+  user:
+    name: "{{ ansible_user_id }}"
+    append: true
+    groups: wireshark
+  become: true
+  listen: add_wireshark_as_nonsudo
+
+- name: Remove current user to wireshark group.
+  user:
+    name: "{{ ansible_user_id }}"
+    remove: true
+    groups: wireshark
+  become: true
+  listen: remove_wireshark_as_nonsudo

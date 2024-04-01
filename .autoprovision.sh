@@ -1,0 +1,26 @@
+#!/bin/sh
+
+if [ -d ~/Development/Debain12PentestWorkstation/ ]; 
+then
+    echo "Playbook is already local. Cannot safely autoprovision. Delete ~/Development/Debain12PentestWorkstation and rerun, or manually run the playbook to continue.";
+    exit 1;
+fi
+
+# Update Packages
+sudo apt update && sudo NEEDRESTART_MODE=a apt-get -y upgrade
+sudo apt install -y git
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3 get-pip.py --user
+python3 -m pip install --user ansible jinja2
+
+# Make Development Folder and Clone the Repo
+mkdir -p ~/Development/Debain12PentestWorkstation;
+git clone https://github.com/carefreecaribou/Debain12PentestWorkstation ~/Development/Debain12PentestWorkstation;
+[ -f ~/provision-config.yml ] && mv ~/provision-config.yml ~/Development/Debain12PentestWorkstation/config.yml;
+cd ~/Development/Debain12PentestWorkstation
+
+# Run the Playbook
+ansible-galaxy install -r requirements.yml
+echo "remove_autostart: true" >> config.yml
+echo 'gnome-terminal -- bash -c "cd ~/Development/Debain12PentestWorkstation && ansible-playbook main.yml --ask-become-pass; bash"' >> ~/.profile
+sudo reboot now

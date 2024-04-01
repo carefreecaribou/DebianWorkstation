@@ -1,0 +1,15 @@
+---
+- hosts: all
+  vars_files:
+    - default.config.yml
+    - config.yml
+
+  # Community Roles from Ansible Galaxy
+  roles:
+    - role: custom/default
+    # - role: PeterMosmans.virtualbox-guest
+    #   become: true
+    # - role: Gotmax23.zoom
+    #   become: true
+    # - role: Iesplin.Burpsuite
+    #   become: true

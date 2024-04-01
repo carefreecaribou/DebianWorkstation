@@ -1,0 +1,10 @@
+[Desktop Entry]
+Icon=flameshot
+Name=Flameshot
+Comment=Screenshot Utility
+Exec=flatpak run org.flameshot.Flameshot
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=Screensaver,Power,Saving,Blank
+StartupNotify=false

@@ -9,13 +9,13 @@ fi
 # Update Packages
 sudo apt update && sudo NEEDRESTART_MODE=a apt-get -y upgrade
 sudo apt install -y git
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-python3 get-pip.py --user
+curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
+python3 /tmp/get-pip.py --user
 python3 -m pip install --user ansible jinja2
 
 # Make Development Folder and Clone the Repo
 mkdir -p ~/Development/Debain12PentestWorkstation;
-git clone https://github.com/carefreecaribou/Debain12PentestWorkstation ~/Development/Debain12PentestWorkstation;
+git clone https://github.com/carefreecaribou/DebainWorkstation.git ~/Development/Debain12PentestWorkstation;
 [ -f ~/provision-config.yml ] && mv ~/provision-config.yml ~/Development/Debain12PentestWorkstation/config.yml;
 cd ~/Development/Debain12PentestWorkstation
 

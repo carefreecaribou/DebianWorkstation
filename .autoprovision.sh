@@ -8,9 +8,7 @@ fi
 
 # Update Packages
 sudo apt update && sudo NEEDRESTART_MODE=a apt-get -y upgrade
-sudo apt install -y git
-curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
-python3 /tmp/get-pip.py --user
+sudo apt install -y git pytohn3-pip
 python3 -m pip install --user ansible jinja2
 
 # Make Development Folder and Clone the Repo

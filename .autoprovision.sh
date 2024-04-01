@@ -15,7 +15,7 @@ python3 -m pip install --user ansible jinja2
 
 # Make Development Folder and Clone the Repo
 mkdir -p ~/Development/Debain12PentestWorkstation;
-git clone https://github.com/carefreecaribou/DebainWorkstation.git ~/Development/Debain12PentestWorkstation;
+git clone https://github.com/carefreecaribou/DebianWorkstation.git ~/Development/Debain12PentestWorkstation;
 [ -f ~/provision-config.yml ] && mv ~/provision-config.yml ~/Development/Debain12PentestWorkstation/config.yml;
 cd ~/Development/Debain12PentestWorkstation
 

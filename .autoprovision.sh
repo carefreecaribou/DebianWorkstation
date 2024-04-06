@@ -19,5 +19,14 @@ cd ~/Development/Debain12PentestWorkstation
 # Run the Playbook
 ansible-galaxy install -r requirements.yml
 echo "remove_autostart: true" >> config.yml
-echo -e 'gnome-terminal -- bash -c "cd ~/Development/Debain12PentestWorkstation && ansible-playbook main.yml --ask-become-pass; bash"' >> ~/.profile
+mkdir -p ~/.config/autostart
+contents='[Desktop Entry]
+Type=Application
+Exec=gnome-terminal -- bash -c "cd ~/Development/Debain12PentestWorkstation && ansible-playbook main.yml --ask-become-pass; bash"
+Hidden=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=AnsibleAutoConfig
+Name=AnsibleAutoConfig'
+echo "$contents" > ~/.config/autostart/ansible.desktop
+chmod +x ~/.config/autostart/init.sh
 sudo reboot now

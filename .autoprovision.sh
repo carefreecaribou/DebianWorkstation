@@ -28,5 +28,4 @@ X-GNOME-Autostart-enabled=true
 Name[en_US]=AnsibleAutoConfig
 Name=AnsibleAutoConfig'
 echo "$contents" > ~/.config/autostart/ansible.desktop
-chmod +x ~/.config/autostart/init.sh
 sudo reboot now

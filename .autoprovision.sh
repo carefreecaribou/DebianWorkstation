@@ -20,5 +20,5 @@ cd ~/Development/Debain12PentestWorkstation
 # Run the Playbook
 ansible-galaxy install -r requirements.yml
 echo "remove_autostart: true" >> config.yml
-echo 'gnome-terminal -- bash -c "cd ~/Development/Debain12PentestWorkstation && ansible-playbook main.yml --ask-become-pass; bash"' >> ~/.profile
+sudo echo '#!/bin/sh\ngnome-terminal -- bash -c "cd ~/Development/Debain12PentestWorkstation && ansible-playbook main.yml --ask-become-pass; bash"' >> /etc/gdm3/PostLogin/Default
 sudo reboot now

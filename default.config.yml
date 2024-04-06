@@ -1,8 +1,7 @@
 ---
 downloads: ~/.ansible-downloads/
-profile_command: 'gnome-terminal -- bash -c "cd ~/Development/Debain12PentestWorkstation && ansible-playbook main.yml --ask-become-pass; bash"'
 # Roles
-configure_docker: true
+# configure_docker: true
 
 # Tasks
 remove_autostart: false
@@ -23,44 +22,38 @@ dotfiles_files:
 
 configure_system_customizations: true # This should always be true to setup the system correctly.
 banner_message: 'Unauthorized Access Prohibited'
-devices_to_disable: 'bluetooth' # 'bluetooth nfc wifi wwan'
-codium_state: present
-virtualbox_version: auto
-zoom_state: present
-pip_packages:
-  - psutil
-  - jmespath
+# codium_state: present
+# virtualbox_version: auto
+# zoom_state: present
+# pip_packages:
+#   - psutil
+#   - jmespath
 customization_packages: # Optional Packages to Install
-  - name: codium
-    state: "{{ codium_state }}" # present/absent/latest, default:  - Change to absent to remove package.
+  # - name: codium
+  #   state: "{{ codium_state }}" # present/absent/latest, default:  - Change to absent to remove package.
   - name: gnupg2              # GPG Package
   - name: scdaemon          # For Allowing use of Yubikey Signing
   - name: pcscd             # For Allowing use of Yubikey Signing
   - name: libpcsclite-dev   # For Allowing use of Yubikey Signing
   - name: caffeine          # Keep the screen awake, If Absent, change `caffeine_on_boot` to `false`.
-  - name: virt-manager
-  - name: qemu-kvm
-  - name: libvirt-daemon-system
-  - name: libvirt-clients
-  - name: bridge-utils
   - name: virtualbox
-flatpak_packages: # Flatpak Packages to Install
-  - name: com.mattermost.Desktop 
-    state: present          # present/absent/latest, default:  - Change to absent to remove package.
-  - name: com.spotify.Client
-  - name: md.obsidian.Obsidian
-  - name: org.flameshot.Flameshot
+# flatpak_packages: # Flatpak Packages to Install
+#   - name: com.mattermost.Desktop 
+#     state: present          # present/absent/latest, default:  - Change to absent to remove package.
+#   - name: com.spotify.Client
+#   - name: md.obsidian.Obsidian
+#   - name: org.flameshot.Flameshot
 autostart_applications:
-  - name: flameshot
-    state: present
+  # - name: flameshot
+  #   state: present
   - name: caffeine-indicator
     state: present
-enable_middle_click_paste: false
+
 configure_infosec_tools: true
 wireshark_as_nonsudo: true
-user_groups:
-  - libvirt
-  - kvm
+# user_groups:
+#   - libvirt
+#   - kvm
 burpsuite_user: "{{ ansible_user_id }}"
 burpsuite_edition: pro
 burpsuite_pro_liense_key: test

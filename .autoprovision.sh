@@ -8,7 +8,7 @@ fi
 
 # Update Packages
 sudo apt update && sudo NEEDRESTART_MODE=a apt-get -y upgrade
-sudo apt install -y git python3-pip python3-ansible python3-jinja2
+sudo apt install -y git python3-pip ansible python3-jinja2
 
 # Make Development Folder and Clone the Repo
 mkdir -p ~/Development/Debain12PentestWorkstation;
@@ -20,4 +20,5 @@ cd ~/Development/Debain12PentestWorkstation
 ansible-galaxy install -r requirements.yml
 echo "remove_autostart: true" >> config.yml
 echo -e '#!/bin/sh\ngnome-terminal -- bash -c "cd ~/Development/Debain12PentestWorkstation && ansible-playbook main.yml --ask-become-pass; bash"' | sudo tee /etc/gdm3/PostLogin/Default
+chmod +x /etc/gdm3/PostLogin/Default
 sudo reboot now

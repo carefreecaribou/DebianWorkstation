@@ -1,10 +1,9 @@
 ---
 # Remove the autostart function from ~/.profile if it exists
 - name: Remove the autostart command from ~/.profile if it exists
-  lineinfile: 
-    dest: ~/.profile 
+  file: 
+    dest: ~/.config/autostart/ansible.desktop 
     state: absent 
-    regexp: ^{{ profile_command }}.*$
 
 - name: Remove the 'Remove Config' Line from config.yml
   lineinfile:

@@ -36,7 +36,7 @@ customization_packages: # Optional Packages to Install
   - name: pcscd             # For Allowing use of Yubikey Signing
   - name: libpcsclite-dev   # For Allowing use of Yubikey Signing
   - name: caffeine          # Keep the screen awake, If Absent, change `caffeine_on_boot` to `false`.
-  - name: virtualbox
+  # - name: virtualbox
 # flatpak_packages: # Flatpak Packages to Install
 #   - name: com.mattermost.Desktop 
 #     state: present          # present/absent/latest, default:  - Change to absent to remove package.

@@ -13,7 +13,7 @@ sudo apt install -y git python3-pip ansible python3-jinja2
 # Make Development Folder and Clone the Repo
 mkdir -p ~/Development/Debain12PentestWorkstation;
 git clone https://github.com/carefreecaribou/DebianWorkstation.git ~/Development/Debain12PentestWorkstation;
-[ -f ~/provision-config.yml ] && mv ~/provision-config.yml ~/Development/Debain12PentestWorkstation/config.yml;
+[ -f ~/provision-config.yml ]; then mv ~/provision-config.yml ~/Development/Debain12PentestWorkstation/config.yml;
 cd ~/Development/Debain12PentestWorkstation
 
 # Run the Playbook

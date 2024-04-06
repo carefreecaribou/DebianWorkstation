@@ -6,7 +6,10 @@
 
   # Community Roles from Ansible Galaxy
   roles:
+    - role: don_rumata.ansible_role_install_virtualbox
+      become: true
     - role: custom/default
+
     # - role: PeterMosmans.virtualbox-guest
     #   become: true
     # - role: Gotmax23.zoom
